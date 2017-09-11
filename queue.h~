@@ -1,0 +1,57 @@
+#if !defined(QUEUE_HPP)
+/* ========================================================================
+   $File: $
+   $Date: $
+   $Revision: $
+   $Creator: Johannes Spies $
+   $Notice: (C) Copyright 2017 by Johannes Spies. All Rights Reserved. $
+
+   Simple one header 'library' for a single linked queue.
+   ======================================================================== */
+
+#define QUEUE_MEMALLOC_FUNCTION(Name) void *Name(long unsigned ByteCount)
+typedef QUEUE_MEMALLOC_FUNCTION(queue_memalloc_function);
+
+#define QUEUE_MEMFREE_FUNCTION(Name) void Name(void *MemoryChunk)
+typedef QUEUE_MEMFREE_FUNCTION(queue_memfree_function);
+
+struct queue_allocator
+{
+    queue_memalloc_function *Alloc;
+    queue_memfree_function *Free;
+};
+
+#if !defined(QUEUE_NO_MALLOC)
+#include <malloc.h>
+
+extern queue_allocator DefaultAllocator = {malloc, free};
+#endif
+
+template<struct contained>
+struct queue_element
+{
+    contained Content;
+    struct queue_element<contained> *Next;
+};
+
+template<struct contained>
+struct queue
+{
+    queue_element<contained> *First;
+};
+
+template<struct contained> queue
+CreateQueue();
+
+#if defined(QUEUE_IMPLEMENTATION)
+template<struct contained> queue
+CreateQueue()
+{
+    queue Result;
+    Result.First = 0;
+    return(Result);
+}
+#endif
+
+#define QUEUE_HPP
+#endif

@@ -1,0 +1,16 @@
+/* ========================================================================
+   $File: $
+   $Date: $
+   $Revision: $
+   $Creator: Johannes Spies $
+   $Notice: (C) Copyright 2017 by Johannes Spies. All Rights Reserved. $
+
+   Test file for queue.h.
+   ======================================================================== */
+#define QUEUE_IMPLEMENTATION
+#include "queue.h"
+
+int
+main(int ArgCount, char **Args) {
+    queue<int> Queue = CreateQueue<int>();
+}
