@@ -1,2 +1,5 @@
 queue_test
+*.cpp~
+*.sh~
+
     
